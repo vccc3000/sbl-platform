@@ -1,0 +1,1 @@
+import{t as e}from"./tag-D7nxRXLN.js";import{Yr as t,t as n}from"./index-wGvRAIJx.js";import{t as r}from"./utils-C0twbFxG.js";t();var i=n(),a=({status:t})=>{let n=r[t];return(0,i.jsx)(e,{color:n.color,children:n.label})};export{a as t};
