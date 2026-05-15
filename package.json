@@ -12,7 +12,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://Vccc3000.github.io/sbl-platform",
+  "homepage": "https://vccc3000.github.io/sbl-platform",
   "dependencies": {
     "@ant-design/icons": "^6.2.3",
     "antd": "^6.4.2",
