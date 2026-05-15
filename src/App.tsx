@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ConfigProvider, App as AntApp } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import AppRoutes from './routes';
@@ -22,9 +22,9 @@ function App() {
   return (
     <ConfigProvider theme={themeConfig} locale={zhCN}>
       <AntApp>
-        <BrowserRouter>
+        <HashRouter>
           <AppRoutes />
-        </BrowserRouter>
+        </HashRouter>
       </AntApp>
     </ConfigProvider>
   );
