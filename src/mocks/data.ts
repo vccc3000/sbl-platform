@@ -1,0 +1,314 @@
+import type {
+  Position,
+  AvailableSecurity,
+  PoolItem,
+  Transaction,
+  Notification,
+  RiskRule,
+  UtilizationData,
+  InterestData,
+  MatchStats,
+  AuditLog,
+  LenderDashboardData,
+  TraderDashboardData,
+} from '../types';
+
+// ============ 持仓数据 ============
+export const mockPositions: Position[] = [
+  { id: 'P001', stockCode: '0700.HK', stockName: '腾讯控股', quantity: 500000, clientId: 'C1001', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P002', stockCode: '0700.HK', stockName: '腾讯控股', quantity: 300000, clientId: 'C1002', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P003', stockCode: '0700.HK', stockName: '腾讯控股', quantity: 200000, clientId: 'C1003', positionType: 'cash', uploadDate: '2026-05-15', authorized: false, brokerCode: 'BRK001' },
+  { id: 'P004', stockCode: '9988.HK', stockName: '阿里巴巴', quantity: 400000, clientId: 'C1001', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P005', stockCode: '9988.HK', stockName: '阿里巴巴', quantity: 250000, clientId: 'C1004', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P006', stockCode: '3690.HK', stockName: '美团', quantity: 350000, clientId: 'C1002', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P007', stockCode: '1299.HK', stockName: '友邦保险', quantity: 600000, clientId: 'C1005', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P008', stockCode: '0005.HK', stockName: '汇丰控股', quantity: 800000, clientId: 'C1006', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P009', stockCode: '0388.HK', stockName: '香港交易所', quantity: 150000, clientId: 'C1007', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P010', stockCode: '0941.HK', stockName: '中国移动', quantity: 500000, clientId: 'C1008', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P011', stockCode: '2318.HK', stockName: '中国平安', quantity: 450000, clientId: 'C1009', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK001' },
+  { id: 'P012', stockCode: '2269.HK', stockName: '药明生物', quantity: 200000, clientId: 'C1010', positionType: 'cash', uploadDate: '2026-05-15', authorized: false, brokerCode: 'BRK001' },
+  // BRK002 持仓
+  { id: 'P013', stockCode: '0700.HK', stockName: '腾讯控股', quantity: 600000, clientId: 'C2001', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK002' },
+  { id: 'P014', stockCode: '9988.HK', stockName: '阿里巴巴', quantity: 300000, clientId: 'C2002', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK002' },
+  { id: 'P015', stockCode: '3690.HK', stockName: '美团', quantity: 280000, clientId: 'C2002', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK002' },
+  { id: 'P016', stockCode: '1810.HK', stockName: '小米集团', quantity: 700000, clientId: 'C2003', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK002' },
+  { id: 'P017', stockCode: '9618.HK', stockName: '京东集团', quantity: 250000, clientId: 'C2004', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK002' },
+  // BRK003 持仓
+  { id: 'P018', stockCode: '0700.HK', stockName: '腾讯控股', quantity: 400000, clientId: 'C3001', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK003' },
+  { id: 'P019', stockCode: '0005.HK', stockName: '汇丰控股', quantity: 500000, clientId: 'C3002', positionType: 'cash', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK003' },
+  { id: 'P020', stockCode: '1299.HK', stockName: '友邦保险', quantity: 350000, clientId: 'C3003', positionType: 'margin', uploadDate: '2026-05-15', authorized: true, brokerCode: 'BRK003' },
+];
+
+// ============ 可借券源 ============
+export const mockAvailableSecurities: AvailableSecurity[] = [
+  { id: 'AS001', stockCode: '0700.HK', stockName: '腾讯控股', totalPosition: 500000, availableQuantity: 350000, lentQuantity: 100000, remainingQuantity: 250000, riskFlag: '', brokerCode: 'BRK001', suggestedRate: 3.5, minTerm: 7, remark: '', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS002', stockCode: '9988.HK', stockName: '阿里巴巴', totalPosition: 650000, availableQuantity: 420000, lentQuantity: 80000, remainingQuantity: 340000, riskFlag: '', brokerCode: 'BRK001', suggestedRate: 4.0, minTerm: 14, remark: '大额可议', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS003', stockCode: '3690.HK', stockName: '美团', totalPosition: 350000, availableQuantity: 245000, lentQuantity: 0, remainingQuantity: 245000, riskFlag: '', brokerCode: 'BRK001', suggestedRate: 5.0, minTerm: 7, remark: '', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS004', stockCode: '1299.HK', stockName: '友邦保险', totalPosition: 600000, availableQuantity: 420000, lentQuantity: 50000, remainingQuantity: 370000, riskFlag: '', brokerCode: 'BRK001', suggestedRate: 2.8, minTerm: 7, remark: '', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS005', stockCode: '0005.HK', stockName: '汇丰控股', totalPosition: 800000, availableQuantity: 560000, lentQuantity: 0, remainingQuantity: 560000, riskFlag: '', brokerCode: 'BRK001', suggestedRate: 2.0, minTerm: 30, remark: '长期出借优惠', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS006', stockCode: '0388.HK', stockName: '香港交易所', totalPosition: 150000, availableQuantity: 105000, lentQuantity: 0, remainingQuantity: 105000, brokerCode: 'BRK001', suggestedRate: 3.2, minTerm: 7, remark: '', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS007', stockCode: '0941.HK', stockName: '中国移动', totalPosition: 500000, availableQuantity: 350000, lentQuantity: 20000, remainingQuantity: 330000, brokerCode: 'BRK001', suggestedRate: 2.5, minTerm: 14, remark: '', published: true, publishDate: '2026-05-15', lastUpdated: '2026-05-15T10:30:00' },
+  { id: 'AS008', stockCode: '2318.HK', stockName: '中国平安', totalPosition: 450000, availableQuantity: 315000, lentQuantity: 0, remainingQuantity: 315000, brokerCode: 'BRK001', suggestedRate: 3.0, minTerm: 7, remark: '', published: false, lastUpdated: '2026-05-15T10:30:00' },
+];
+
+// ============ 券池广场 ============
+export const mockPoolItems: PoolItem[] = [
+  {
+    stockCode: '0700.HK', stockName: '腾讯控股', totalAvailable: 750000, lenderCount: 3, rateRange: [3.2, 3.8],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: true,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 250000, suggestedRate: 3.5, minTerm: 7, remark: '' },
+      { brokerCode: 'BRK002', availableQuantity: 350000, suggestedRate: 3.2, minTerm: 14, remark: '大额优先' },
+      { brokerCode: 'BRK003', availableQuantity: 150000, suggestedRate: 3.8, minTerm: 7, remark: '' },
+    ],
+  },
+  {
+    stockCode: '9988.HK', stockName: '阿里巴巴', totalAvailable: 480000, lenderCount: 2, rateRange: [3.8, 4.2],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: true,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 340000, suggestedRate: 4.0, minTerm: 14, remark: '大额可议' },
+      { brokerCode: 'BRK002', availableQuantity: 140000, suggestedRate: 4.2, minTerm: 7, remark: '' },
+    ],
+  },
+  {
+    stockCode: '3690.HK', stockName: '美团', totalAvailable: 380000, lenderCount: 2, rateRange: [4.5, 5.2],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: true,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 245000, suggestedRate: 5.0, minTerm: 7, remark: '' },
+      { brokerCode: 'BRK002', availableQuantity: 135000, suggestedRate: 5.2, minTerm: 14, remark: '' },
+    ],
+  },
+  {
+    stockCode: '1299.HK', stockName: '友邦保险', totalAvailable: 550000, lenderCount: 2, rateRange: [2.5, 2.8],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: false,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 370000, suggestedRate: 2.8, minTerm: 7, remark: '' },
+      { brokerCode: 'BRK003', availableQuantity: 180000, suggestedRate: 2.5, minTerm: 30, remark: '长期出借' },
+    ],
+  },
+  {
+    stockCode: '0005.HK', stockName: '汇丰控股', totalAvailable: 720000, lenderCount: 2, rateRange: [1.8, 2.0],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: false,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 560000, suggestedRate: 2.0, minTerm: 30, remark: '长期出借优惠' },
+      { brokerCode: 'BRK003', availableQuantity: 160000, suggestedRate: 1.8, minTerm: 14, remark: '' },
+    ],
+  },
+  {
+    stockCode: '1810.HK', stockName: '小米集团', totalAvailable: 450000, lenderCount: 1, rateRange: [4.5, 4.5],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: true,
+    lenders: [
+      { brokerCode: 'BRK002', availableQuantity: 450000, suggestedRate: 4.5, minTerm: 7, remark: '' },
+    ],
+  },
+  {
+    stockCode: '9618.HK', stockName: '京东集团', totalAvailable: 180000, lenderCount: 1, rateRange: [4.8, 4.8],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: false,
+    lenders: [
+      { brokerCode: 'BRK002', availableQuantity: 180000, suggestedRate: 4.8, minTerm: 14, remark: '' },
+    ],
+  },
+  {
+    stockCode: '0388.HK', stockName: '香港交易所', totalAvailable: 105000, lenderCount: 1, rateRange: [3.2, 3.2],
+    lastUpdated: '2026-05-15T10:30:00', stockType: 'blue_chip', hot: false,
+    lenders: [
+      { brokerCode: 'BRK001', availableQuantity: 105000, suggestedRate: 3.2, minTerm: 7, remark: '' },
+    ],
+  },
+];
+
+// ============ 交易记录 ============
+export const mockTransactions: Transaction[] = [
+  {
+    id: 'T001', transactionNo: 'TR-20260501-0001', stockCode: '0700.HK', stockName: '腾讯控股',
+    lenderBroker: 'BRK001', borrowerId: 'BOR001', quantity: 100000, agreedRate: 3.5,
+    startDate: '2026-05-05', expectedEndDate: '2026-06-05', status: 'delivered',
+    accumulatedInterest: 33561.64, ccassRef: 'CCASS-20260505-001',
+    logs: [
+      { id: 'L001', timestamp: '2026-05-04T14:30:00', operator: '李交易员', action: '发起撮合', fromStatus: undefined, toStatus: 'matching', remark: '借入方需求：0700.HK 10万股' },
+      { id: 'L002', timestamp: '2026-05-04T15:20:00', operator: '张经理', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '同意以3.5%年化费率借出' },
+      { id: 'L003', timestamp: '2026-05-04T16:00:00', operator: '李交易员', action: '确认交易', fromStatus: 'pending', toStatus: 'confirmed', remark: '双方确认交易条款' },
+      { id: 'L004', timestamp: '2026-05-05T09:30:00', operator: '李交易员', action: '发起交收', fromStatus: 'confirmed', toStatus: 'delivering', remark: 'CCASS交收参考号：CCASS-20260505-001' },
+      { id: 'L005', timestamp: '2026-05-05T16:30:00', operator: '李交易员', action: '确认交收完成', fromStatus: 'delivering', toStatus: 'delivered', remark: 'CCASS股票到账确认' },
+    ],
+    matches: [{ brokerCode: 'BRK001', quantity: 100000, rate: 3.5, status: 'approved' }],
+  },
+  {
+    id: 'T002', transactionNo: 'TR-20260508-0002', stockCode: '9988.HK', stockName: '阿里巴巴',
+    lenderBroker: 'BRK001', borrowerId: 'BOR002', quantity: 80000, agreedRate: 4.0,
+    startDate: '2026-05-12', expectedEndDate: '2026-07-12', status: 'delivered',
+    accumulatedInterest: 9863.01, ccassRef: 'CCASS-20260512-003',
+    logs: [
+      { id: 'L006', timestamp: '2026-05-07T10:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '借入方需求：9988.HK 8万股' },
+      { id: 'L007', timestamp: '2026-05-07T11:15:00', operator: '张经理', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '同意以4.0%费率借出' },
+      { id: 'L008', timestamp: '2026-05-08T09:00:00', operator: '李交易员', action: '确认交易', fromStatus: 'pending', toStatus: 'confirmed', remark: '确认交易' },
+      { id: 'L009', timestamp: '2026-05-12T09:30:00', operator: '李交易员', action: '发起交收', fromStatus: 'confirmed', toStatus: 'delivering', remark: 'CCASS-20260512-003' },
+      { id: 'L010', timestamp: '2026-05-12T15:00:00', operator: '李交易员', action: '确认交收完成', fromStatus: 'delivering', toStatus: 'delivered', remark: 'CCASS到账' },
+    ],
+    matches: [{ brokerCode: 'BRK001', quantity: 80000, rate: 4.0, status: 'approved' }],
+  },
+  {
+    id: 'T003', transactionNo: 'TR-20260510-0003', stockCode: '3690.HK', stockName: '美团',
+    lenderBroker: 'BRK002', borrowerId: 'BOR003', quantity: 50000, agreedRate: 5.0,
+    startDate: '2026-05-15', expectedEndDate: '2026-05-29', status: 'confirmed',
+    accumulatedInterest: 0,
+    logs: [
+      { id: 'L011', timestamp: '2026-05-10T14:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '借入方需求：3690.HK 5万股' },
+      { id: 'L012', timestamp: '2026-05-10T15:30:00', operator: 'BRK002券商', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '同意借出' },
+      { id: 'L013', timestamp: '2026-05-10T16:00:00', operator: '李交易员', action: '确认交易', fromStatus: 'pending', toStatus: 'confirmed', remark: '等待发起交收' },
+    ],
+    matches: [{ brokerCode: 'BRK002', quantity: 50000, rate: 5.0, status: 'approved' }],
+  },
+  {
+    id: 'T004', transactionNo: 'TR-20260512-0004', stockCode: '1299.HK', stockName: '友邦保险',
+    lenderBroker: 'BRK001', borrowerId: 'BOR004', quantity: 50000, agreedRate: 2.8,
+    startDate: '2026-05-14', expectedEndDate: '2026-08-14', status: 'delivering',
+    accumulatedInterest: 3835.62, ccassRef: 'CCASS-20260514-007',
+    logs: [
+      { id: 'L014', timestamp: '2026-05-12T09:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '借入方需求' },
+      { id: 'L015', timestamp: '2026-05-12T10:00:00', operator: '张经理', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '' },
+      { id: 'L016', timestamp: '2026-05-13T09:00:00', operator: '李交易员', action: '确认交易', fromStatus: 'pending', toStatus: 'confirmed', remark: '' },
+      { id: 'L017', timestamp: '2026-05-14T10:00:00', operator: '李交易员', action: '发起交收', fromStatus: 'confirmed', toStatus: 'delivering', remark: 'CCASS-20260514-007' },
+    ],
+    matches: [{ brokerCode: 'BRK001', quantity: 50000, rate: 2.8, status: 'approved' }],
+  },
+  {
+    id: 'T005', transactionNo: 'TR-20260513-0005', stockCode: '0700.HK', stockName: '腾讯控股',
+    lenderBroker: 'BRK002', borrowerId: 'BOR005', quantity: 200000, agreedRate: 3.2,
+    startDate: undefined as any, expectedEndDate: '2026-06-13', status: 'matching',
+    accumulatedInterest: 0,
+    logs: [
+      { id: 'L018', timestamp: '2026-05-13T11:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '借入方大额需求：0700.HK 20万股，等待BRK002确认' },
+    ],
+    matches: [{ brokerCode: 'BRK002', quantity: 200000, rate: 3.2, status: 'pending', remark: '等待确认' }],
+  },
+  {
+    id: 'T006', transactionNo: 'TR-20260514-0006', stockCode: '1810.HK', stockName: '小米集团',
+    lenderBroker: 'BRK002', borrowerId: 'BOR006', quantity: 100000, agreedRate: 4.5,
+    startDate: undefined as any, expectedEndDate: '2026-05-28', status: 'pending',
+    accumulatedInterest: 0,
+    logs: [
+      { id: 'L019', timestamp: '2026-05-14T14:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '' },
+      { id: 'L020', timestamp: '2026-05-14T15:00:00', operator: 'BRK002券商', action: '议价', fromStatus: 'matching', toStatus: 'pending', remark: '建议费率4.8%，等待交易员确认' },
+    ],
+    matches: [{ brokerCode: 'BRK002', quantity: 100000, rate: 4.5, status: 'counter_offer', counterRate: 4.8, remark: '建议上调费率' }],
+  },
+  {
+    id: 'T007', transactionNo: 'TR-20260501-0007', stockCode: '0941.HK', stockName: '中国移动',
+    lenderBroker: 'BRK001', borrowerId: 'BOR007', quantity: 20000, agreedRate: 2.5,
+    startDate: '2026-05-03', expectedEndDate: '2026-06-03', status: 'returning',
+    accumulatedInterest: 16438.36,
+    logs: [
+      { id: 'L021', timestamp: '2026-05-01T09:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '' },
+      { id: 'L022', timestamp: '2026-05-01T10:00:00', operator: '张经理', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '' },
+      { id: 'L023', timestamp: '2026-05-02T09:00:00', operator: '李交易员', action: '确认+交收', toStatus: 'delivered', remark: '' },
+      { id: 'L024', timestamp: '2026-05-14T16:00:00', operator: '李交易员', action: '发起还券', fromStatus: 'delivered', toStatus: 'returning', remark: '借入方到期还券' },
+    ],
+    matches: [{ brokerCode: 'BRK001', quantity: 20000, rate: 2.5, status: 'approved' }],
+  },
+  {
+    id: 'T008', transactionNo: 'TR-20260415-0008', stockCode: '0005.HK', stockName: '汇丰控股',
+    lenderBroker: 'BRK003', borrowerId: 'BOR008', quantity: 80000, agreedRate: 1.8,
+    startDate: '2026-04-20', expectedEndDate: '2026-05-20', status: 'settled',
+    accumulatedInterest: 39452.05,
+    logs: [
+      { id: 'L025', timestamp: '2026-04-15T10:00:00', operator: '李交易员', action: '发起撮合', toStatus: 'matching', remark: '' },
+      { id: 'L026', timestamp: '2026-04-15T14:00:00', operator: 'BRK003券商', action: '同意借出', fromStatus: 'matching', toStatus: 'pending', remark: '' },
+      { id: 'L027', timestamp: '2026-04-16T09:00:00', operator: '李交易员', action: '确认交易', toStatus: 'confirmed', remark: '' },
+      { id: 'L028', timestamp: '2026-04-20T09:30:00', operator: '李交易员', action: '发起交收', toStatus: 'delivering', remark: '' },
+      { id: 'L029', timestamp: '2026-04-20T16:00:00', operator: '李交易员', action: '交收完成', toStatus: 'delivered', remark: '' },
+      { id: 'L030', timestamp: '2026-05-18T10:00:00', operator: '李交易员', action: '发起还券', fromStatus: 'delivered', toStatus: 'returning', remark: '到期还券' },
+      { id: 'L031', timestamp: '2026-05-19T10:00:00', operator: '李交易员', action: '还券完成', fromStatus: 'returning', toStatus: 'returned', remark: '' },
+      { id: 'L032', timestamp: '2026-05-20T16:00:00', operator: '系统', action: '券息结清', fromStatus: 'returned', toStatus: 'settled', remark: '券息自动结算' },
+    ],
+    matches: [{ brokerCode: 'BRK003', quantity: 80000, rate: 1.8, status: 'approved' }],
+  },
+];
+
+// ============ 通知消息 ============
+export const mockNotifications: Notification[] = [
+  { id: 'N001', type: 'position_alert', title: '⚠️ 持仓变动预警', content: '0700.HK 腾讯控股可借数量不足，已借出10万股，当前剩余25万股，请关注。', priority: 'urgent', read: false, createdAt: '2026-05-15T08:00:00', relatedStockCode: '0700.HK', relatedTransactionId: 'T005' },
+  { id: 'N002', type: 'match_request', title: '📋 新撮合请求', content: '交易员发起对0700.HK腾讯控股20万股的借入需求，请确认是否可借出。', priority: 'high', read: false, createdAt: '2026-05-13T11:00:00', relatedStockCode: '0700.HK', relatedTransactionId: 'T005' },
+  { id: 'N003', type: 'match_response', title: '📝 撮合议价', content: 'BRK002对1810.HK小米集团提出议价：建议费率从4.5%上调至4.8%。', priority: 'high', read: false, createdAt: '2026-05-14T15:00:00', relatedStockCode: '1810.HK', relatedTransactionId: 'T006' },
+  { id: 'N004', type: 'due_reminder', title: '⏰ 到期提醒', content: '0005.HK汇丰控股交易(TR-20260415-0008)将于3天内到期，请准备还券安排。', priority: 'high', read: true, createdAt: '2026-05-12T09:00:00', relatedTransactionId: 'T008' },
+  { id: 'N005', type: 'delivery_update', title: '✅ 交收完成', content: '0700.HK腾讯控股交易(TR-20260501-0001)CCASS交收已完成，股票已到账。', priority: 'medium', read: true, createdAt: '2026-05-05T16:30:00', relatedTransactionId: 'T001' },
+  { id: 'N006', type: 'delivery_update', title: '🔄 交收中', content: '1299.HK友邦保险交易(TR-20260512-0004)CCASS交收进行中。', priority: 'medium', read: true, createdAt: '2026-05-14T10:00:00', relatedTransactionId: 'T004' },
+  { id: 'N007', type: 'publish_success', title: '✅ 券源发布成功', content: '已成功发布7只股票的券源信息至券池广场。', priority: 'low', read: true, createdAt: '2026-05-15T10:30:00' },
+  { id: 'N008', type: 'daily_report', title: '📊 每日券息报告', content: '今日累计券息收入 HK$ 23,450.00，在借股数120万股。', priority: 'low', read: false, createdAt: '2026-05-15T18:00:00' },
+];
+
+// ============ 风控规则 ============
+export const mockRiskRules: RiskRule[] = [
+  { id: 'R001', name: '客户授权要求', dimension: '客户授权比例', description: '仅已授权借出的客户持仓参与可借券源计算', value: '仅已授权客户', enabled: true, lastModified: '2026-05-01' },
+  { id: 'R002', name: '持仓集中度限制', dimension: '持仓集中度限制', description: '单一股票可借出数量不超过总持仓的百分比', value: 70, unit: '%', enabled: true, lastModified: '2026-05-01' },
+  { id: 'R003', name: '流动性筛选', dimension: '流动性筛选', description: '剔除日均成交量低于阈值的股票', value: 500000, unit: '股/日', enabled: true, lastModified: '2026-05-01' },
+  { id: 'R004', name: '券商自留比例', dimension: '券商自留比例', description: '券商可设定最低保留比例，不参与借出', value: 30, unit: '%', enabled: true, lastModified: '2026-05-10' },
+  { id: 'R005', name: '合规黑名单', dimension: '合规黑名单', description: '排除被监管限制的股票标的', value: 'SFC禁止名单', enabled: true, lastModified: '2026-05-01' },
+  { id: 'R006', name: '最小借出单位', dimension: '最小借出单位', description: '借出数量须为整手倍数', value: '按每手股数取整', enabled: true, lastModified: '2026-05-01' },
+];
+
+// ============ 报表数据 ============
+export const mockUtilizationData: UtilizationData[] = [
+  { date: '2026-05-09', totalAvailable: 2500000, totalLent: 180000, utilizationRate: 7.2 },
+  { date: '2026-05-10', totalAvailable: 2550000, totalLent: 210000, utilizationRate: 8.2 },
+  { date: '2026-05-11', totalAvailable: 2480000, totalLent: 230000, utilizationRate: 9.3 },
+  { date: '2026-05-12', totalAvailable: 2600000, totalLent: 280000, utilizationRate: 10.8 },
+  { date: '2026-05-13', totalAvailable: 2620000, totalLent: 310000, utilizationRate: 11.8 },
+  { date: '2026-05-14', totalAvailable: 2580000, totalLent: 280000, utilizationRate: 10.9 },
+  { date: '2026-05-15', totalAvailable: 2650000, totalLent: 320000, utilizationRate: 12.1 },
+];
+
+export const mockInterestData: InterestData[] = [
+  { stockCode: '0700.HK', stockName: '腾讯控股', dailyInterest: 9589.04, accumulatedInterest: 33561.64, period: '2026-05-05 ~ 2026-06-05' },
+  { stockCode: '9988.HK', stockName: '阿里巴巴', dailyInterest: 2800.00, accumulatedInterest: 9863.01, period: '2026-05-12 ~ 2026-07-12' },
+  { stockCode: '1299.HK', stockName: '友邦保险', dailyInterest: 1917.81, accumulatedInterest: 3835.62, period: '2026-05-14 ~ 2026-08-14' },
+  { stockCode: '0941.HK', stockName: '中国移动', dailyInterest: 1369.86, accumulatedInterest: 16438.36, period: '2026-05-03 ~ 2026-06-03' },
+];
+
+export const mockMatchStats: MatchStats[] = [
+  { date: '2026-05-09', totalRequests: 5, successCount: 4, successRate: 80, avgDuration: 120 },
+  { date: '2026-05-10', totalRequests: 8, successCount: 6, successRate: 75, avgDuration: 95 },
+  { date: '2026-05-11', totalRequests: 6, successCount: 5, successRate: 83.3, avgDuration: 110 },
+  { date: '2026-05-12', totalRequests: 10, successCount: 8, successRate: 80, avgDuration: 85 },
+  { date: '2026-05-13', totalRequests: 7, successCount: 6, successRate: 85.7, avgDuration: 78 },
+  { date: '2026-05-14', totalRequests: 9, successCount: 7, successRate: 77.8, avgDuration: 92 },
+  { date: '2026-05-15', totalRequests: 4, successCount: 3, successRate: 75, avgDuration: 105 },
+];
+
+// ============ 审计日志 ============
+export const mockAuditLogs: AuditLog[] = [
+  { id: 'A001', timestamp: '2026-05-15T10:30:00', operator: '张经理', operatorRole: 'lender', action: '持仓上传', module: '持仓管理', detail: '上传BRK001持仓数据12条', ipAddress: '192.168.1.100' },
+  { id: 'A002', timestamp: '2026-05-15T10:35:00', operator: '系统', operatorRole: 'admin', action: '风控计算', module: '持仓管理', detail: '完成BRK001风控计算，生成可借券源7只', ipAddress: '127.0.0.1' },
+  { id: 'A003', timestamp: '2026-05-15T10:40:00', operator: '张经理', operatorRole: 'lender', action: '券源发布', module: '券池广场', detail: '一键发布7只可借券源至券池广场', ipAddress: '192.168.1.100' },
+  { id: 'A004', timestamp: '2026-05-14T14:00:00', operator: '李交易员', operatorRole: 'trader', action: '发起撮合', module: '交易管理', detail: '对1810.HK发起撮合请求，BRK002，10万股', ipAddress: '192.168.1.101' },
+  { id: 'A005', timestamp: '2026-05-14T15:00:00', operator: 'BRK002券商', operatorRole: 'lender', action: '撮合议价', module: '交易管理', detail: '1810.HK议价，费率4.5%→4.8%', ipAddress: '192.168.2.50' },
+  { id: 'A006', timestamp: '2026-05-14T16:00:00', operator: '李交易员', operatorRole: 'trader', action: '发起还券', module: '交易管理', detail: '0941.HK到期还券，2万股', ipAddress: '192.168.1.101' },
+  { id: 'A007', timestamp: '2026-05-13T11:00:00', operator: '李交易员', operatorRole: 'trader', action: '发起撮合', module: '交易管理', detail: '对0700.HK发起撮合请求，BRK002，20万股', ipAddress: '192.168.1.101' },
+  { id: 'A008', timestamp: '2026-05-10T09:00:00', operator: '王管理员', operatorRole: 'admin', action: '规则修改', module: '系统设置', detail: '修改券商自留比例从25%调整为30%', ipAddress: '192.168.1.200' },
+];
+
+// ============ 仪表盘数据 ============
+export const mockLenderDashboard: LenderDashboardData = {
+  totalAvailableSecurities: 8,
+  totalPublishedSecurities: 7,
+  todayInterest: 15676.71,
+  accumulatedInterest: 63698.63,
+  activeTransactions: 4,
+  pendingConfirmations: 1,
+  utilizationTrend: mockUtilizationData,
+  recentNotifications: mockNotifications.filter(n => !n.read).slice(0, 5),
+};
+
+export const mockTraderDashboard: TraderDashboardData = {
+  totalPoolStocks: 8,
+  totalAvailableQuantity: 3195000,
+  todayMatches: 3,
+  pendingDeliveries: 2,
+  poolOverview: mockPoolItems.slice(0, 6).map(p => ({
+    stockCode: p.stockCode,
+    stockName: p.stockName,
+    available: p.totalAvailable,
+  })),
+  matchTrend: mockMatchStats,
+  recentTransactions: mockTransactions.slice(0, 5),
+};
