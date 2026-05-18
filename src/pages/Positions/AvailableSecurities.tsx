@@ -82,7 +82,7 @@ const AvailableSecurities: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-        <Title level={4} style={{ margin: 0 }}>📋 可借券源清单</Title>
+        <Title level={4} style={{ margin: 0 }}>可借券源清单</Title>
         <Button type="primary" icon={<SendOutlined />} onClick={handlePublishAll}>
           一键全部发布
         </Button>

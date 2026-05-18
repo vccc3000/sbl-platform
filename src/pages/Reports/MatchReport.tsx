@@ -23,18 +23,18 @@ const MatchReport: React.FC = () => {
       { type: 'value', name: '成功率(%) / 时长(分钟)', axisLabel: { formatter: '{value}' } },
     ],
     series: [
-      { name: '撮合总数', type: 'bar', data: data.map(d => d.totalRequests), color: '#91caff', barWidth: 20 },
-      { name: '成功数', type: 'bar', data: data.map(d => d.successCount), color: '#1677ff', barWidth: 20 },
+      { name: '撮合总数', type: 'bar', data: data.map(d => d.totalRequests), color: '#14b8a6', barWidth: 20 },
+      { name: '成功数', type: 'bar', data: data.map(d => d.successCount), color: '#0f766e', barWidth: 20 },
       {
         name: '成功率', type: 'line', yAxisIndex: 1,
         data: data.map(d => d.successRate),
-        color: '#52c41a', smooth: true,
+        color: '#059669', smooth: true,
         label: { show: true, formatter: '{c}%' },
       },
       {
         name: '平均时长', type: 'line', yAxisIndex: 1,
         data: data.map(d => d.avgDuration),
-        color: '#faad14', smooth: true, lineStyle: { type: 'dashed' },
+        color: '#b7791f', smooth: true, lineStyle: { type: 'dashed' },
         label: { show: true, formatter: '{c}min' },
       },
     ],
@@ -42,7 +42,7 @@ const MatchReport: React.FC = () => {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 24 }}>📊 撮合统计报告</Title>
+      <Title level={4} style={{ marginBottom: 24 }}>撮合统计报告</Title>
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={24} sm={8}>
@@ -54,7 +54,7 @@ const MatchReport: React.FC = () => {
         <Col xs={24} sm={8}>
           <Card size="small">
             <Text type="secondary">撮合成功率</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#52c41a' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#059669' }}>
               {avgSuccessRate.toFixed(1)}%
             </Title>
           </Card>
@@ -62,14 +62,14 @@ const MatchReport: React.FC = () => {
         <Col xs={24} sm={8}>
           <Card size="small">
             <Text type="secondary">平均撮合时长</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#faad14' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#b7791f' }}>
               {avgDuration.toFixed(0)} 分钟
             </Title>
           </Card>
         </Col>
       </Row>
 
-      <Card title="📈 撮合趋势（近7日）" size="small">
+      <Card title="撮合趋势（近7日）" size="small">
         <ReactECharts option={option} style={{ height: 400 }} />
       </Card>
     </div>

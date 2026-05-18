@@ -69,7 +69,7 @@ const PositionUpload: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <CheckCircleOutlined style={{ fontSize: 48, color: '#52c41a' }} />
+                  <CheckCircleOutlined style={{ fontSize: 48, color: '#059669' }} />
                   <br /><br />
                   <Text strong style={{ fontSize: 16 }}>持仓数据上传并校验完成！</Text>
                   <br />
@@ -91,7 +91,7 @@ const PositionUpload: React.FC = () => {
       </Card>
 
       {/* 预览最近上传 */}
-      <Card title="📋 当前持仓预览" size="small">
+      <Card title="当前持仓预览" size="small">
         <Table
           dataSource={brokerPositions.slice(0, 10)}
           rowKey="id"

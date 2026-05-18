@@ -29,12 +29,12 @@ const LenderDashboard: React.FC = () => {
       { type: 'value', name: '利用率(%)', axisLabel: { formatter: '{value}%' } },
     ],
     series: [
-      { name: '可借数量', type: 'bar', data: data.utilizationTrend.map(d => d.totalAvailable), color: '#91caff' },
-      { name: '已借数量', type: 'bar', data: data.utilizationTrend.map(d => d.totalLent), color: '#1677ff' },
+      { name: '可借数量', type: 'bar', data: data.utilizationTrend.map(d => d.totalAvailable), color: '#14b8a6', barWidth: 22 },
+      { name: '已借数量', type: 'bar', data: data.utilizationTrend.map(d => d.totalLent), color: '#0f766e', barWidth: 22 },
       {
         name: '利用率', type: 'line', yAxisIndex: 1,
         data: data.utilizationTrend.map(d => d.utilizationRate),
-        color: '#52c41a', smooth: true,
+        color: '#b7791f', smooth: true, lineStyle: { width: 2.5 },
       },
     ],
   };
@@ -56,7 +56,7 @@ const LenderDashboard: React.FC = () => {
     <div>
       <div style={{ marginBottom: 24 }}>
         <Title level={4} style={{ margin: 0 }}>
-          👋 欢迎回来，{user?.name}
+          欢迎回来，{user?.name}
         </Title>
         <Typography.Text type="secondary">
           {user?.brokerCode} · 借出方视角 · {new Date().toLocaleDateString('zh-CN')}
@@ -70,7 +70,7 @@ const LenderDashboard: React.FC = () => {
             title="可借券源数"
             value={data.totalAvailableSecurities}
             suffix="只"
-            prefix={<InboxOutlined style={{ color: '#1677ff' }} />}
+            prefix={<InboxOutlined style={{ color: '#0f766e' }} />}
             trend="up" trendValue="+2"
           />
         </Col>
@@ -79,14 +79,14 @@ const LenderDashboard: React.FC = () => {
             title="已发布券源"
             value={data.totalPublishedSecurities}
             suffix="只"
-            prefix={<InboxOutlined style={{ color: '#52c41a' }} />}
+            prefix={<InboxOutlined style={{ color: '#059669' }} />}
           />
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <StatCard
             title="今日券息收入"
             value={formatCurrency(data.todayInterest)}
-            prefix={<DollarOutlined style={{ color: '#faad14' }} />}
+            prefix={<DollarOutlined style={{ color: '#b7791f' }} />}
             trend="up" trendValue="+12.5%"
           />
         </Col>
@@ -95,7 +95,7 @@ const LenderDashboard: React.FC = () => {
             title="活跃交易"
             value={data.activeTransactions}
             suffix={`/ ${data.pendingConfirmations} 待确认`}
-            prefix={<FileTextOutlined style={{ color: '#722ed1' }} />}
+            prefix={<FileTextOutlined style={{ color: '#6366f1' }} />}
           />
         </Col>
       </Row>
@@ -103,7 +103,7 @@ const LenderDashboard: React.FC = () => {
       <Row gutter={[16, 16]}>
         {/* 券源利用率趋势图 */}
         <Col xs={24} lg={14}>
-          <Card title="📈 券源利用率趋势（近7日）" size="small">
+          <Card title="券源利用率趋势（近7日）" size="small">
             {data.utilizationTrend.length > 0 ? (
               <ReactECharts option={utilizationOption} style={{ height: 360 }} />
             ) : (
@@ -114,7 +114,7 @@ const LenderDashboard: React.FC = () => {
 
         {/* 可借券源概览 */}
         <Col xs={24} lg={10}>
-          <Card title="📦 我的可借券源" size="small">
+          <Card title="我的可借券源" size="small">
             <Table
               dataSource={mockAvailableSecurities.filter(s => s.brokerCode === user?.brokerCode)}
               rowKey="id"

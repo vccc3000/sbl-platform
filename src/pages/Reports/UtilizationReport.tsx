@@ -29,20 +29,20 @@ const UtilizationReport: React.FC = () => {
       {
         name: '可借总数', type: 'bar', stack: 'total',
         data: data.map(d => d.totalAvailable),
-        itemStyle: { color: '#e8e8e8' },
+        itemStyle: { color: '#e2e8f0' },
         barWidth: 24,
       },
       {
         name: '已借数量', type: 'bar', stack: 'total',
         data: data.map(d => d.totalLent),
-        itemStyle: { color: '#1677ff' },
+        itemStyle: { color: '#0f766e' },
         barWidth: 24,
         label: { show: true, position: 'inside', formatter: (p: any) => p.value > 100000 ? `${(p.value/10000).toFixed(1)}万` : '' },
       },
       {
         name: '利用率', type: 'line', yAxisIndex: 1,
         data: data.map(d => d.utilizationRate),
-        itemStyle: { color: '#52c41a' },
+        itemStyle: { color: '#059669' },
         smooth: true,
         label: { show: true, formatter: '{c}%' },
       },
@@ -51,7 +51,7 @@ const UtilizationReport: React.FC = () => {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 24 }}>📊 券源利用率报告</Title>
+      <Title level={4} style={{ marginBottom: 24 }}>券源利用率报告</Title>
 
       {/* 汇总卡片 */}
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
@@ -66,7 +66,7 @@ const UtilizationReport: React.FC = () => {
         <Col xs={24} sm={8}>
           <Card size="small">
             <Text type="secondary">当前已借出</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#1677ff' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#0f766e' }}>
               {formatNumber(data[data.length - 1].totalLent)} 股
             </Title>
           </Card>
@@ -74,14 +74,14 @@ const UtilizationReport: React.FC = () => {
         <Col xs={24} sm={8}>
           <Card size="small">
             <Text type="secondary">当前利用率</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#52c41a' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#059669' }}>
               {data[data.length - 1].utilizationRate}%
             </Title>
           </Card>
         </Col>
       </Row>
 
-      <Card title="📈 利用率趋势（近7日）" size="small">
+      <Card title="利用率趋势（近7日）" size="small">
         <ReactECharts option={trendOption} style={{ height: 400 }} />
       </Card>
     </div>

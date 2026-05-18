@@ -55,7 +55,7 @@ const MessageCenter: React.FC = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <Title level={4} style={{ margin: 0 }}>
-          🔔 消息中心
+          消息中心
           {unreadCount > 0 && (
             <Badge count={unreadCount} style={{ marginLeft: 8 }} />
           )}

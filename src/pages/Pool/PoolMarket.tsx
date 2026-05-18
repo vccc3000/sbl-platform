@@ -81,7 +81,7 @@ const PoolMarket: React.FC = () => {
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <Title level={4} style={{ margin: 0 }}>🏪 券池广场</Title>
+        <Title level={4} style={{ margin: 0 }}>券池广场</Title>
         <Text type="secondary">浏览所有已发布的可借券源，发起撮合交易</Text>
       </div>
 

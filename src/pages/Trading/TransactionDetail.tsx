@@ -50,7 +50,7 @@ const TransactionDetail: React.FC = () => {
             <Text strong>{formatRate(transaction.agreedRate)}</Text>
           </Descriptions.Item>
           <Descriptions.Item label="累计券息">
-            <Text strong style={{ color: '#1677ff' }}>{formatCurrency(transaction.accumulatedInterest)}</Text>
+            <Text strong style={{ color: '#0f766e' }}>{formatCurrency(transaction.accumulatedInterest)}</Text>
           </Descriptions.Item>
           {transaction.startDate && (
             <Descriptions.Item label="借出起始日">{formatDate(transaction.startDate, 'date')}</Descriptions.Item>
@@ -75,7 +75,7 @@ const TransactionDetail: React.FC = () => {
 
       {/* 撮合明细 */}
       {transaction.matches.length > 0 && (
-        <Card title="📋 撮合拆分明细" size="small" style={{ marginBottom: 16 }}>
+        <Card title="撮合拆分明细" size="small" style={{ marginBottom: 16 }}>
           {transaction.matches.map((m, idx) => (
             <Descriptions key={idx} size="small" bordered style={{ marginBottom: 8 }}>
               <Descriptions.Item label="借出方">{m.brokerCode}</Descriptions.Item>

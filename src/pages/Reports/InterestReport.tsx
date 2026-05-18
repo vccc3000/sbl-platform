@@ -39,13 +39,13 @@ const InterestReport: React.FC = () => {
       {
         name: '每日券息', type: 'bar',
         data: data.map(d => parseFloat(d.dailyInterest.toFixed(2))).reverse(),
-        itemStyle: { color: '#91caff' },
+        itemStyle: { color: '#14b8a6' },
         label: { show: true, position: 'right', formatter: (p: any) => `HK$ ${p.value.toFixed(2)}` },
       },
       {
         name: '累计券息', type: 'bar',
         data: data.map(d => parseFloat(d.accumulatedInterest.toFixed(2))).reverse(),
-        itemStyle: { color: '#1677ff' },
+        itemStyle: { color: '#0f766e' },
         label: { show: true, position: 'right', formatter: (p: any) => `HK$ ${p.value.toFixed(2)}` },
       },
     ],
@@ -56,13 +56,13 @@ const InterestReport: React.FC = () => {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 24 }}>💰 券息收入报告</Title>
+      <Title level={4} style={{ marginBottom: 24 }}>券息收入报告</Title>
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={24} sm={12}>
           <Card size="small">
             <Text type="secondary">今日券息合计</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#1677ff' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#0f766e' }}>
               {formatCurrency(totalDaily)}
             </Title>
           </Card>
@@ -70,7 +70,7 @@ const InterestReport: React.FC = () => {
         <Col xs={24} sm={12}>
           <Card size="small">
             <Text type="secondary">累计券息合计</Text>
-            <Title level={3} style={{ margin: '8px 0', color: '#52c41a' }}>
+            <Title level={3} style={{ margin: '8px 0', color: '#059669' }}>
               {formatCurrency(totalAcc)}
             </Title>
           </Card>
@@ -79,12 +79,12 @@ const InterestReport: React.FC = () => {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
-          <Card title="📊 累计券息分布" size="small">
+          <Card title="累计券息分布" size="small">
             <ReactECharts option={pieOption} style={{ height: 350 }} />
           </Card>
         </Col>
         <Col xs={24} lg={12}>
-          <Card title="📈 券息对比" size="small">
+          <Card title="券息对比" size="small">
             <ReactECharts option={barOption} style={{ height: 350 }} />
           </Card>
         </Col>

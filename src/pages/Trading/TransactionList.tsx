@@ -55,7 +55,7 @@ const TransactionList: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-        <Title level={4} style={{ margin: 0 }}>📝 交易记录</Title>
+        <Title level={4} style={{ margin: 0 }}>交易记录</Title>
         <Space wrap>
           <Button icon={<CalendarOutlined />} onClick={() => navigate('/trading/calendar')}>
             到期日历

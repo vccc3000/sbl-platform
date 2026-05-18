@@ -25,18 +25,18 @@ const InterestDetail: React.FC = () => {
         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/trading')}>返回</Button>
       </Space>
 
-      <Title level={4} style={{ margin: '0 0 16px' }}>💰 券息明细</Title>
+      <Title level={4} style={{ margin: '0 0 16px' }}>券息明细</Title>
 
       {/* 汇总卡片 */}
       <Card size="small" style={{ marginBottom: 16 }}>
         <Space size="large" wrap>
           <div>
             <Text type="secondary">今日券息合计：</Text>
-            <Text strong style={{ fontSize: 24, color: '#1677ff' }}>{formatCurrency(totalDaily)}</Text>
+            <Text strong style={{ fontSize: 24, color: '#0f766e' }}>{formatCurrency(totalDaily)}</Text>
           </div>
           <div>
             <Text type="secondary">累计券息合计：</Text>
-            <Text strong style={{ fontSize: 24, color: '#52c41a' }}>{formatCurrency(totalAccumulated)}</Text>
+            <Text strong style={{ fontSize: 24, color: '#059669' }}>{formatCurrency(totalAccumulated)}</Text>
           </div>
         </Space>
         <br />

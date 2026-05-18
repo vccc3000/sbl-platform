@@ -205,86 +205,125 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     : undefined;
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', background: token.colorBgLayout }}>
       <Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
         breakpoint="lg"
         onBreakpoint={(broken) => setCollapsed(broken)}
+        theme="dark"
+        width={236}
         style={{
-          background: token.colorBgContainer,
-          borderRight: `1px solid ${token.colorBorderSecondary}`,
+          background: 'linear-gradient(180deg, #071426 0%, #0b1f36 100%)',
+          borderRight: '1px solid rgba(148, 163, 184, 0.16)',
+          boxShadow: '8px 0 24px rgba(15, 23, 42, 0.12)',
         }}
       >
         {/* Logo 区域 */}
         <div
           style={{
-            height: 64,
+            height: 76,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            borderBottom: `1px solid ${token.colorBorderSecondary}`,
-            padding: '0 16px',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            borderBottom: '1px solid rgba(148, 163, 184, 0.16)',
+            padding: collapsed ? '0 12px' : '0 18px',
           }}
         >
           {collapsed ? (
-            <Text strong style={{ fontSize: 20, color: token.colorPrimary }}>
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                background: 'linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)',
+                borderRadius: 8,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                fontWeight: 800,
+                fontSize: 12,
+                letterSpacing: '0.08em',
+              }}
+            >
               SBL
-            </Text>
+            </div>
           ) : (
-            <Space>
+            <Space size={12} align="center">
               <div
                 style={{
-                  width: 32,
-                  height: 32,
-                  background: token.colorPrimary,
+                  width: 40,
+                  height: 40,
+                  background: 'linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)',
                   borderRadius: 8,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: '#fff',
-                  fontWeight: 'bold',
-                  fontSize: 16,
+                  fontWeight: 800,
+                  fontSize: 13,
+                  letterSpacing: '0.08em',
+                  boxShadow: '0 10px 24px rgba(20, 184, 166, 0.24)',
                 }}
               >
                 SBL
               </div>
-              <Text strong style={{ fontSize: 16 }}>
-                SBL平台
-              </Text>
+              <Space size={1} direction="vertical">
+                <Text strong style={{ fontSize: 16, color: '#e2e8f0', lineHeight: 1.2 }}>
+                  Securities Lending
+                </Text>
+                <Text style={{ fontSize: 11, color: '#94a3b8', letterSpacing: '0.05em' }}>
+                  HK / US Securities Lending Desk
+                </Text>
+              </Space>
             </Space>
           )}
         </div>
 
         <Menu
           mode="inline"
+          theme="dark"
           selectedKeys={[selectedKey]}
           defaultOpenKeys={openKeys}
           items={getMenuItems()}
           onClick={handleMenuClick}
-          style={{ border: 'none', marginTop: 8 }}
+          style={{ border: 'none', marginTop: 12, background: 'transparent', paddingInline: 8 }}
         />
       </Sider>
 
-      <Layout>
+      <Layout style={{ background: token.colorBgLayout }}>
         <AntHeader
           style={{
-            background: token.colorBgContainer,
+            background: 'rgba(255, 255, 255, 0.96)',
             padding: '0 24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             borderBottom: `1px solid ${token.colorBorderSecondary}`,
             height: 64,
+            boxShadow: '0 1px 0 rgba(15, 23, 42, 0.02)',
+            position: 'sticky',
+            top: 0,
+            zIndex: 5,
           }}
         >
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{ fontSize: 16, width: 40, height: 40 }}
-          />
+          <Space size={16}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{ fontSize: 16, width: 40, height: 40, color: '#334155' }}
+            />
+            <Space size={2} direction="vertical" style={{ lineHeight: 1.2 }}>
+              <Text strong style={{ color: '#0f172a', fontSize: 14 }}>
+                证券借贷运营台
+              </Text>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                Real-time lending, matching and settlement overview
+              </Text>
+            </Space>
+          </Space>
 
           <Space size="middle">
             {/* 角色快速切换 */}
@@ -292,7 +331,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               size="small"
               value={user?.role}
               onChange={(val: UserRole) => switchRole(val)}
-              style={{ width: 120 }}
+              style={{ width: 132 }}
               options={[
                 { value: 'lender', label: '借出方' },
                 { value: 'trader', label: '交易员' },
@@ -306,18 +345,22 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 type="text"
                 icon={<BellOutlined />}
                 onClick={() => navigate('/messages')}
-                style={{ fontSize: 16 }}
+                style={{ fontSize: 16, color: '#334155' }}
               />
             </Badge>
 
             {/* 用户信息 */}
             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-              <Space style={{ cursor: 'pointer' }}>
-                <Avatar size="small" icon={<UserOutlined />} />
+              <Space style={{ cursor: 'pointer' }} size={10}>
+                <Avatar
+                  size="small"
+                  icon={<UserOutlined />}
+                  style={{ background: '#0f766e', color: '#ffffff' }}
+                />
                 <Space size={0} direction="vertical" style={{ lineHeight: 1.2 }}>
-                  <Text style={{ fontSize: 13 }}>{user?.name}</Text>
+                  <Text style={{ fontSize: 13, color: '#0f172a', fontWeight: 600 }}>{user?.name}</Text>
                   <Text type="secondary" style={{ fontSize: 11 }}>
-                    {user ? roleLabel[user.role] : ''}
+                    {user ? `${roleLabel[user.role]} · ${user.brokerCode}` : ''}
                   </Text>
                 </Space>
               </Space>
@@ -329,8 +372,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           style={{
             margin: 24,
             padding: 24,
-            background: token.colorBgContainer,
+            background: 'rgba(255, 255, 255, 0.88)',
+            border: `1px solid ${token.colorBorderSecondary}`,
             borderRadius: token.borderRadiusLG,
+            boxShadow: '0 12px 30px rgba(15, 23, 42, 0.05)',
             minHeight: 280,
             overflow: 'auto',
           }}

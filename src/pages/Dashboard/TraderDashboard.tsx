@@ -28,12 +28,12 @@ const TraderDashboard: React.FC = () => {
       { type: 'value', name: '成功率(%)', min: 0, max: 100, axisLabel: { formatter: '{value}%' } },
     ],
     series: [
-      { name: '撮合总数', type: 'bar', data: data.matchTrend.map(d => d.totalRequests), color: '#91caff' },
-      { name: '成功数', type: 'bar', data: data.matchTrend.map(d => d.successCount), color: '#1677ff' },
+      { name: '撮合总数', type: 'bar', data: data.matchTrend.map(d => d.totalRequests), color: '#14b8a6', barWidth: 22 },
+      { name: '成功数', type: 'bar', data: data.matchTrend.map(d => d.successCount), color: '#0f766e', barWidth: 22 },
       {
         name: '成功率', type: 'line', yAxisIndex: 1,
         data: data.matchTrend.map(d => d.successRate),
-        color: '#52c41a', smooth: true,
+        color: '#b7791f', smooth: true, lineStyle: { width: 2.5 },
       },
     ],
   };
@@ -47,7 +47,7 @@ const TraderDashboard: React.FC = () => {
       type: 'bar',
       data: data.poolOverview.map(p => p.available / 10000).reverse(),
       label: { show: true, position: 'right', formatter: '{c}万' },
-      color: '#1677ff',
+      color: '#0f766e',
     }],
   };
 
@@ -66,7 +66,7 @@ const TraderDashboard: React.FC = () => {
     <div>
       <div style={{ marginBottom: 24 }}>
         <Title level={4} style={{ margin: 0 }}>
-          👋 {user?.name}，交易员工作台
+          {user?.name}，交易员工作台
         </Title>
         <Typography.Text type="secondary">
           券池总览 · {new Date().toLocaleDateString('zh-CN')}
@@ -80,14 +80,14 @@ const TraderDashboard: React.FC = () => {
             title="券池股票数"
             value={data.totalPoolStocks}
             suffix="只"
-            prefix={<ShopOutlined style={{ color: '#1677ff' }} />}
+            prefix={<ShopOutlined style={{ color: '#0f766e' }} />}
           />
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <StatCard
             title="总可借数量"
             value={`${(data.totalAvailableQuantity / 10000).toFixed(0)}万`}
-            prefix={<ShopOutlined style={{ color: '#52c41a' }} />}
+            prefix={<ShopOutlined style={{ color: '#059669' }} />}
           />
         </Col>
         <Col xs={24} sm={12} lg={6}>
@@ -95,7 +95,7 @@ const TraderDashboard: React.FC = () => {
             title="今日撮合数"
             value={data.todayMatches}
             suffix="笔"
-            prefix={<ThunderboltOutlined style={{ color: '#faad14' }} />}
+            prefix={<ThunderboltOutlined style={{ color: '#b7791f' }} />}
             trend="up" trendValue="+1"
           />
         </Col>
@@ -104,7 +104,7 @@ const TraderDashboard: React.FC = () => {
             title="待交收事项"
             value={data.pendingDeliveries}
             suffix="笔"
-            prefix={<ClockCircleOutlined style={{ color: '#ff4d4f' }} />}
+            prefix={<ClockCircleOutlined style={{ color: '#b42318' }} />}
           />
         </Col>
       </Row>
@@ -112,14 +112,14 @@ const TraderDashboard: React.FC = () => {
       <Row gutter={[16, 16]}>
         {/* 撮合统计 */}
         <Col xs={24} lg={14}>
-          <Card title="📊 撮合统计（近7日）" size="small">
+          <Card title="撮合统计（近7日）" size="small">
             <ReactECharts option={matchOption} style={{ height: 340 }} />
           </Card>
         </Col>
 
         {/* 热门券源 */}
         <Col xs={24} lg={10}>
-          <Card title="🔥 热门券源 TOP 4" size="small">
+          <Card title="热门券源 TOP 4" size="small">
             {hotStocks.map((stock) => (
               <div key={stock.stockCode} style={{ marginBottom: 16 }}>
                 <Space style={{ width: '100%', justifyContent: 'space-between', marginBottom: 4 }}>
@@ -128,7 +128,7 @@ const TraderDashboard: React.FC = () => {
                 </Space>
                 <Progress
                   percent={Math.round((stock.available / data.totalAvailableQuantity) * 100)}
-                  strokeColor="#1677ff"
+                  strokeColor="#14b8a6"
                   size="small"
                   format={(p) => `${p}%`}
                 />
@@ -141,14 +141,14 @@ const TraderDashboard: React.FC = () => {
       {/* 券池总览图 */}
       <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={12}>
-          <Card title="🏪 券池可借数量分布" size="small">
+          <Card title="券池可借数量分布" size="small">
             <ReactECharts option={poolOption} style={{ height: 300 }} />
           </Card>
         </Col>
 
         {/* 最近交易 */}
         <Col xs={24} lg={12}>
-          <Card title="📝 最近交易" size="small">
+          <Card title="最近交易" size="small">
             <Table
               dataSource={data.recentTransactions}
               rowKey="id"

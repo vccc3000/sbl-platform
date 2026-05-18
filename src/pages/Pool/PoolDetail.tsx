@@ -49,7 +49,7 @@ const PoolDetail: React.FC = () => {
         </Descriptions>
       </Card>
 
-      <Card title="📋 各借出方供给明细" size="small">
+      <Card title="各借出方供给明细" size="small">
         <Table
           dataSource={poolItem.lenders}
           rowKey="brokerCode"

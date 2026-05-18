@@ -41,7 +41,7 @@ const PositionList: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-        <Title level={4} style={{ margin: 0 }}>📦 持仓列表</Title>
+        <Title level={4} style={{ margin: 0 }}>持仓列表</Title>
         <Space wrap>
           <Button type="primary" icon={<UploadOutlined />} onClick={() => navigate('/positions/upload')}>
             上传持仓
